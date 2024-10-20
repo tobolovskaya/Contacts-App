@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { refreshUser } from './redux/auth/operations';
 import { selectIsRefreshing } from './redux/auth/selectors';
-import PrivateRoute from './components/PrivateRoute';
-import RestrictedRoute from './components/RestrictedRoute';
-import Layout from './components/Layout';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute';
+import Layout from './components/Layout/Layout';
 
-const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
-const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
-const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
-const ContactsPage = lazy(() => import('./pages/ContactsPage/ContactsPage'));
+const HomePage = lazy(() => import('./pages/HomePage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage'));
+const ContactsPage = lazy(() => import('./pages/ContactsPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
