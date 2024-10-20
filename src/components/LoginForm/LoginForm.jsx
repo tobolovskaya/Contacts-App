@@ -1,51 +1,60 @@
-
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/auth/operations';
-import styles from './LoginForm.module.css';
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string().min(6, 'Password too short').required('Password is required'),
-});
+import { useDispatch } from "react-redux";
+import { logIn } from "../../redux/auth/operations";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import styles from "./LoginForm.module.css";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, { resetForm }) => {
-    dispatch(login(values));
-    resetForm();
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string()
+        .min(6, "Must be at least 6 characters")
+        .required("Required"),
+    }),
+    onSubmit: (values) => {
+      dispatch(logIn(values));
+    },
+  });
 
   return (
-    <div className={styles.container}>
-      <h2>Login</h2>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validationSchema={LoginSchema}
-        onSubmit={handleSubmit}
-      >
-        {() => (
-          <Form className={styles.form}>
-            <div>
-              <label htmlFor="email">Email</label>
-              <Field type="email" name="email" />
-              <ErrorMessage name="email" component="div" className={styles.error} />
-            </div>
+    <form className={styles.form} onSubmit={formik.handleSubmit}>
+      <label className={styles.label}>
+        Email
+        <input
+          type="email"
+          name="email"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+        />
+        {formik.touched.email && formik.errors.email ? (
+          <div className={styles.error}>{formik.errors.email}</div>
+        ) : null}
+      </label>
 
-            <div>
-              <label htmlFor="password">Password</label>
-              <Field type="password" name="password" />
-              <ErrorMessage name="password" component="div" className={styles.error} />
-            </div>
+      <label className={styles.label}>
+        Password
+        <input
+          type="password"
+          name="password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.password}
+        />
+        {formik.touched.password && formik.errors.password ? (
+          <div className={styles.error}>{formik.errors.password}</div>
+        ) : null}
+      </label>
 
-            <button type="submit">Login</button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+      <button type="submit">Log In</button>
+    </form>
   );
 };
-
 export default LoginForm;
