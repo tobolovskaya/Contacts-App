@@ -2,7 +2,7 @@ import { useEffect, lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute.jsx";
-import { RestrictedRoute } from "./components/RestrictedRoute/RestrictedRoute.jsx";
+import { RestrictedRoute } from './components/RestrictedRoute/RestrictedRoute.jsx';
 import { refreshUser } from "./redux/auth/operations";
 import { selectIsRefreshing } from "./redux/auth/selectors";
 import Layout from "./components/Layout/Layout";
