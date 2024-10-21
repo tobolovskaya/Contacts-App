@@ -1,28 +1,30 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import ContactForm from '../components/ContactForm/ContactForm';
-import ContactList from '../components/ContactList/ContactList';
-import SearchBox from '../components/SearchBox/SearchBox';
-import { fetchContacts } from '../redux/contacts/operations';
-import { selectIsLoading, selectError } from '../redux/contacts/selectors';
+import ContactList from "../components/ContactList/ContactList";
+import ContactForm from "../components/ContactForm/ContactForm";
+import SearchBox from "../components/SearchBox/SearchBox";
+import { useEffect } from "react";
+import { fetchContacts } from "../redux/contacts/operations.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectFilteredContacts } from "../redux/contacts/selectors.js";
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const contacts = useSelector(selectFilteredContacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
   return (
-    <div className={styles.contactsPage}>
-      <h1>Contacts</h1>
+    <div>
+      <h1>Your Contacts</h1>
       <ContactForm />
+      <br></br>
       <SearchBox />
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      <ContactList />
+      {contacts.length > 0 ? (
+        <ContactList contacts={contacts} />
+      ) : (
+        <p>No contacts found</p>
+      )}
     </div>
   );
 };
