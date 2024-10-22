@@ -1,37 +1,32 @@
-
-import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import { useDispatch } from 'react-redux';
-import { logIn } from '../redux/auth/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { login } from '../redux/auth/operations';
+import { selectIsLoggedIn } from '../redux/auth/selectors';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const navigate = useNavigate();
 
-  const handleSubmit = (values) => {
-    dispatch(logIn(values));
+  const handleLogin = (credentials) => {
+    dispatch(login(credentials));
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/contacts'); 
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div>
-      <h1>Login</h1>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        onSubmit={handleSubmit}
-      >
-        <Form>
-          <div>
-            <label>Email</label>
-            <Field name="email" type="email" />
-          </div>
-          <div>
-            <label>Password</label>
-            <Field name="password" type="password" />
-          </div>
-          <button type="submit">Log In</button>
-        </Form>
-      </Formik>
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
+      </form>
     </div>
   );
 };
 
 export default LoginPage;
+
