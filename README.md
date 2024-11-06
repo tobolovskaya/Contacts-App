@@ -1,5 +1,5 @@
 # Contacts App
-This is a refactored Contacts App as part of the "Mastering Front-End Development with React" course assignment. The app allows users to manage a list of contacts with interaction through a backend for persistent data storage.
+This is a refactored Contacts App as part of the **"Mastering Front-End Development with React"** course assignment. The app allows users to manage a list of contacts with interaction through a backend for persistent data storage.
 
 ## Task Description
 Refactor the code of the Contacts App from the previous module's homework assignment.
