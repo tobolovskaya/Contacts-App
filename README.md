@@ -17,6 +17,7 @@ Use the axios library to perform HTTP requests.
 
 ## Technologies Used
 **React** for the front-end interface
+
 **Redux Toolkit** for state management
 **createAsyncThunk** for handling asynchronous actions
 **axios** for making HTTP requests
